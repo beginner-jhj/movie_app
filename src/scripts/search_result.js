@@ -1,7 +1,7 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useCallback } from "react";
 import { useParams } from "react-router-dom";
 import ResultPageStyle from "../styles/SearchResult.module.css"
-import { SearchBlock, Movie_box } from "./home";
+import { SearchBlock, MovieBox } from "./home";
 import {Link} from "react-router-dom";
 
 function ResultPage(){
@@ -9,13 +9,13 @@ function ResultPage(){
     const [Results, setResults] = useState([])
     const [keyword, setKeyWord] = useState('')
     const key = process.env.REACT_APP_MY_API_KEY
-    const getResults = async () => {
+    const getResults = useCallback(async () => {
         const response = await fetch(`https://api.themoviedb.org/3/search/movie?api_key=${key}&query=${search_term}&language=ko-KR
         `)
         const data = await response.json()
         setResults(data.results)
-    }
-    useEffect(()=>{getResults()}, [search_term])
+    }, [key, search_term])
+    useEffect(()=>{getResults()}, [search_term, getResults])
     return (
         <div className={ResultPageStyle.search_result_home}>
             <div className={ResultPageStyle.search_box_container}>
@@ -33,7 +33,7 @@ function ShowResults({movies}){
     return (
     <div className={ResultPageStyle.movies_container}>
         {movies.map((movie)=>(
-            <Movie_box poster_path={movie.poster_path} title={movie.title} id={movie.id}/>
+            <MovieBox poster_path={movie.poster_path} title={movie.title} id={movie.id}/>
         ))}
     </div>
     )

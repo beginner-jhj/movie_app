@@ -55,7 +55,7 @@ function Detail(){
         setRuntime(planeJson.runtime)
         setPosterPath(planeJson.poster_path)
     }
-    
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     useEffect(()=>{getDetailsOfMovie()}, [])
 
     return (
@@ -109,7 +109,7 @@ function Detail(){
 
 function ShowVideo({videoKey}){
     return (
-        <iframe width="100%" height="100%" src={`https://www.youtube.com/embed/${videoKey}`} frameBorder="0"></iframe>
+        <iframe title="영화 예고편 영상" width="100%" height="100%" src={`https://www.youtube.com/embed/${videoKey}`} frameBorder="0"></iframe>
     )
 }
 

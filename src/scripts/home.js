@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect,useCallback } from "react";
 import { useNavigate, Link } from "react-router-dom";
 import HomeStyle from '../styles/Home.module.css'
 import Slider from "react-slick";
@@ -89,13 +89,13 @@ function MovieSlider({movies, endpoint,region, setMovies, api_key}){
     const baseUrlPopularMovies = `https://api.themoviedb.org/3/movie/${endpoint}?api_key=${api_key}`
     const regionParameter = `&language=ko-KR&region=${region}`
 
-    const getMovies = async () => {
+    const getMovies = useCallback(async () => {
         const response = await fetch(`${baseUrlPopularMovies}${regionParameter}`)
         const data = await response.json()
         setMovies(data.results)
-    }
-    
-    useEffect(()=>{getMovies()}, [])
+    }, [])
+
+    useEffect(()=>{getMovies()}, [getMovies])
 
     const settings = {
         dots: false,
@@ -118,7 +118,7 @@ function MovieSlider({movies, endpoint,region, setMovies, api_key}){
             <StyledSlider {...settings}>
                 {movies.map((movie)=>(
                     <div key={movie.id} className={HomeStyle.movies_container}>
-                        <Movie_box poster_path={movie.poster_path} title={movie.title} id={movie.id}/>
+                        <MovieBox poster_path={movie.poster_path} title={movie.title} id={movie.id}/>
                     </div>
                 ))}
             </StyledSlider>
@@ -127,7 +127,7 @@ function MovieSlider({movies, endpoint,region, setMovies, api_key}){
 }
 
 
-export function Movie_box({poster_path, title,id}){
+export function MovieBox({poster_path, title,id}){
     const baseUrl = 'https://image.tmdb.org/t/p/'
     const size = 'w154'
     return (

@@ -63,7 +63,7 @@ p{
     height: 100%;
     display: flex;
     flex-direction: row;
-    justify-items: start;
+    justify-items:flex-start;
     padding: 10px;
 }
 
@@ -87,7 +87,7 @@ p{
 }
 
 .cast, .director{
-    justify-self: start;
+    justify-self: flex-start;
     margin-bottom: 20px;
 }
 
@@ -129,5 +129,5 @@ p{
     height: 100%;
     display: flex;
     align-items: center;
-    justify-content: start;
+    justify-content: flex-start;
 }
