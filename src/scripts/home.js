@@ -104,9 +104,7 @@ function MovieSlider({movies, endpoint,region, setMovies, api_key}){
         slidesToShow: 3,
         slidesToScroll: 1,
         swipe:true,
-        swipeToSlide:true,
-        autoplay:true,
-        autoplaySpeed:3000,
+        swipeToSlide:true
     }
 
     const StyledSlider = styled(Slider)`
