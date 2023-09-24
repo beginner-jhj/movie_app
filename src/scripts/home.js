@@ -52,7 +52,7 @@ function Home(){
             </div>
             <span/>
             <div className={HomeStyle.container}>
-                <span>계봉 예정 영화</span>
+                <span>개봉 예정 영화</span>
                 <div className={HomeStyle.show_box}>
                     <MovieSlider movies={UpcomingMovies} endpoint={'upcoming'} region={'KR'} setMovies={setUpcomingMovies} api_key={key}></MovieSlider>
                 </div>
