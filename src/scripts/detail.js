@@ -1,5 +1,5 @@
 import { useParams } from "react-router-dom";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useCallback } from "react";
 import DetailStyles from '../styles/Detail.module.css'
 import {SearchBlock} from './home'
 import { Link } from "react-router-dom";
@@ -28,7 +28,7 @@ function Detail(){
     const secondMainCharacter = mainCharacters[1]
     const thirdMainCharacter = mainCharacters[2]
     
-    const getDetailsOfMovie = async () => {
+    const getDetailsOfMovie = useCallback(async () => {
         const videoRes = await fetch(videoUrl)
         const videoJson = await videoRes.json()
         
@@ -54,9 +54,9 @@ function Detail(){
         setScore(planeJson.vote_average)
         setRuntime(planeJson.runtime)
         setPosterPath(planeJson.poster_path)
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-    useEffect(()=>{getDetailsOfMovie()}, [])
+    }, [videoUrl, planeUrl, credditUrl, id, key])
+
+    useEffect(()=>{getDetailsOfMovie()}, [getDetailsOfMovie])
 
     return (
         <div className={DetailStyles.movie_detail_box}>
