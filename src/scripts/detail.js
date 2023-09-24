@@ -54,7 +54,7 @@ function Detail(){
         setScore(planeJson.vote_average)
         setRuntime(planeJson.runtime)
         setPosterPath(planeJson.poster_path)
-    }, [videoUrl, planeUrl, credditUrl, id, key])
+    }, [videoUrl, planeUrl, credditUrl])
 
     useEffect(()=>{getDetailsOfMovie()}, [getDetailsOfMovie])
 

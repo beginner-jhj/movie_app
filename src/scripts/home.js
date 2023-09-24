@@ -93,7 +93,7 @@ function MovieSlider({movies, endpoint,region, setMovies, api_key}){
         const response = await fetch(`${baseUrlPopularMovies}${regionParameter}`)
         const data = await response.json()
         setMovies(data.results)
-    }, [])
+    }, [baseUrlPopularMovies, regionParameter, setMovies])
 
     useEffect(()=>{getMovies()}, [getMovies])
 
