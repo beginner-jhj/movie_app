@@ -18,41 +18,40 @@ function Home(){
     
     return (
         <div className={HomeStyle.main_home}>
-            <div>
-            <Link to={'/'} className={HomeStyle.noUnderline}><h1>POPMOVIE</h1></Link>
+            <div className={HomeStyle.head_container}>
+                <Link to={'/'} className={HomeStyle.noUnderline}><h1>POPMOVIE</h1></Link>
                 <SearchBlock setKeyWord={setKeyWord} keyword={keyword}></SearchBlock>
             </div>
-            <span/>
+        
             <div className={HomeStyle.container}>
-                <span>국내 인기 영화</span>
+                <h2>국내 인기 영화</h2>
                 <div className={HomeStyle.show_box}>
                     <MovieSlider movies={KrPopularMovies} endpoint={'popular'} region='KR' setMovies={setKrPopularMovies} api_key={key}></MovieSlider>
                 </div>
             </div>
-            <span/>
+        
             <div className={HomeStyle.container}>
-                <span>해외 인기 영화</span>
+                <h2>해외 인기 영화</h2>
                 <div className={HomeStyle.show_box}>
                     <MovieSlider movies={ForeignPopularMovies} endpoint={'popular'} region={'US'} setMovies={setForeignPopularMovies} api_key={key}></MovieSlider>
                 </div>
             </div>
-            <span/>
             <div className={HomeStyle.container}>
-                <span>국내 상영 영화</span>
+                <h2>국내 상영 영화</h2>
                 <div className={HomeStyle.show_box}>
                     <MovieSlider movies={KrNowPlaying} endpoint={'now_playing'} region={'KR'} setMovies={setKrNowPlaying} api_key={key}></MovieSlider>
                 </div>
             </div>
-            <span/>
+        
             <div className={HomeStyle.container}>
-                <span>최고 평점 영화</span>
+                <h2>최고 평점 영화</h2>
                 <div className={HomeStyle.show_box}>
                     <MovieSlider movies={BestMovies} endpoint={'top_rated'} region={'US'} setMovies={setBestMovies} api_key={key}></MovieSlider>
                 </div>
             </div>
-            <span/>
+        
             <div className={HomeStyle.container}>
-                <span>개봉 예정 영화</span>
+                <h2>개봉 예정 영화</h2>
                 <div className={HomeStyle.show_box}>
                     <MovieSlider movies={UpcomingMovies} endpoint={'upcoming'} region={'KR'} setMovies={setUpcomingMovies} api_key={key}></MovieSlider>
                 </div>

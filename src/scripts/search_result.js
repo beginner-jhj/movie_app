@@ -23,7 +23,6 @@ function ResultPage(){
                 <SearchBlock keyword={keyword} setKeyWord={setKeyWord}/>
                 <h3>'{search_term}'에 대한 검색결과</h3>
             </div>
-            <span/>
             <ShowResults movies={Results}/>
         </div>
     )

@@ -1,7 +1,11 @@
-body, html,#root{
-    width: 100%;
-    height: 100%;
-    margin: 0;
-    padding: 0;
+@import 'reset.css';
+body{
+    width: 100vw;
     background-color:rgb(40, 39, 39);
+}
+
+h1{
+    color: red;
+    text-align: center;
+    font-size: 35px;
 }

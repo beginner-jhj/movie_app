@@ -22,11 +22,6 @@ function Detail(){
     const [isYouTube, setIsYouTube] = useState(true)
     const [mainCharacters, setMainCharacters] = useState([])
     const [director, setDirector] = useState('')
-    const posterBaseUrl = 'https://image.tmdb.org/t/p/'
-    const posterSize = 'w154'
-    const firstMainCharacter = mainCharacters[0]
-    const secondMainCharacter = mainCharacters[1]
-    const thirdMainCharacter = mainCharacters[2]
     
     const getDetailsOfMovie = useCallback(async () => {
         const videoRes = await fetch(videoUrl)
@@ -60,47 +55,33 @@ function Detail(){
 
     return (
         <div className={DetailStyles.movie_detail_box}>
-            <div>
-            <Link to={'/'} className={DetailStyles.noUnderline}><h1>POPMOVIE</h1></Link>
-            <SearchBlock keyword={keyword} setKeyWord={setKeyWord}/>
+            <div className={DetailStyles.title_box}>
+                <Link className={DetailStyles.noUnderline} to={'/'}><h1>POPMOVIE</h1></Link>
             </div>
-            <h1 className={DetailStyles.title}>{title}</h1>
-            {isYouTube ? <ShowVideo videoKey={videoKey}/> : <AlteringVideo posterPath={posterPath}/>}
+            <div className={DetailStyles.head_box}>
+                <SearchBlock setKeyWord={setKeyWord} keyword={keyword}/>
+                <h1>{title}</h1>
+            </div>
+            <div className={DetailStyles.video_box}>
+                {isYouTube ? <ShowVideo videoKey={videoKey} /> : <AlteringVideo posterPath={posterPath}/>}            
+            </div>
             <div className={DetailStyles.overview_container}>
-                <p className={DetailStyles.overview}>{overview}</p>
+                <p>{overview}</p>
             </div>
             <div className={DetailStyles.information_container}>
-                <div className={DetailStyles.genre_container}>{genres.map((genre)=><span key={genre.name} className={DetailStyles.genre}>{genre.name}</span>)}</div>
-                <div className={DetailStyles.date_score_container}>
-                    <span>개봉일: {releaseDate}</span>
-                    <span>평점(TMDB): {score}</span>
-                    <span>상영시간: {runtime}분</span>
+                <h2>출연진</h2>
+                <div className={DetailStyles.cast_container}>
+                    {mainCharacters.map((mainCharacter)=>(<ShowActor profilePath={mainCharacter.profile_path} character={mainCharacter.character} name={mainCharacter.name}/>))}
                 </div>
-            </div>
-            <h3 className={DetailStyles.cast}>출연진</h3>
-            {firstMainCharacter &&(<div className={DetailStyles.creddits_container}>
-                <div className={DetailStyles.profile_container}>
-                    <img className={DetailStyles.profile_img} alt="" src={`${posterBaseUrl}${posterSize}${firstMainCharacter.profile_path}`}></img>
-                    <span className={DetailStyles.profile}>{firstMainCharacter.character}</span>
-                    <span className={DetailStyles.profile}>{firstMainCharacter.name}</span>
+                <h2>감독</h2>
+                <div className={DetailStyles.cast_container}>
+                    <ShowActor profilePath={director.profile_path} character='Drector' name={director.name}/>
                 </div>
-                <div className={DetailStyles.profile_container}>
-                    <img className={DetailStyles.profile_img} alt="" src={`${posterBaseUrl}${posterSize}${secondMainCharacter.profile_path}`}></img>
-                    <span className={DetailStyles.profile}>{secondMainCharacter.character}</span>
-                    <span className={DetailStyles.profile}>{secondMainCharacter.name}</span>
-                </div>
-                <div className={DetailStyles.profile_container}>
-                    <img className={DetailStyles.profile_img} alt="" src={`${posterBaseUrl}${posterSize}${thirdMainCharacter.profile_path}`}></img>
-                    <span className={DetailStyles.profile}>{thirdMainCharacter.character}</span>
-                    <span className={DetailStyles.profile}>{thirdMainCharacter.name}</span>
-                </div>
-            </div>)}
-            <h3 className={DetailStyles.director}>감독</h3>
-            <div className={DetailStyles.director_container}>
-                <div className={DetailStyles.director_profile_container}>
-                    <img className={DetailStyles.profile_img} alt="" src={`${posterBaseUrl}${posterSize}${director.profile_path}`}></img>
-                    <span className={DetailStyles.profile}>Director</span>
-                    <span className={DetailStyles.profile}>{director.name}</span>
+                <div className={DetailStyles.details_container}>
+                    <p>{genres.map(genre=>(genre.name+' '))}</p>
+                    <p>상영시간: {runtime}분</p>
+                    <p>개봉일: {releaseDate}</p>
+                    <p>평점: {score}(TMDB)</p>
                 </div>
             </div>
         </div>
@@ -109,7 +90,7 @@ function Detail(){
 
 function ShowVideo({videoKey}){
     return (
-        <iframe title="영화 예고편 영상" width="100%" height="100%" src={`https://www.youtube.com/embed/${videoKey}`} frameBorder="0"></iframe>
+        <iframe title="영화 예고편 영상" width='100%' height="100%" src={`https://www.youtube.com/embed/${videoKey}`} frameBorder="0"></iframe>
     )
 }
 
@@ -121,6 +102,18 @@ function AlteringVideo({posterPath}){
         <div className={DetailStyles.exception}>
             <img alt="" src={`${posterBaseUrl}${posterSize}${posterPath}`}></img>
             <p>예고편을 가져올 수 없습니다.</p>
+        </div>
+    )
+}
+
+function ShowActor({profilePath, character,name}){
+    const posterBaseUrl = 'https://image.tmdb.org/t/p/'
+    const posterSize = 'w154'
+    return (
+        <div className={DetailStyles.cast_box}>
+            <img src={`${posterBaseUrl}${posterSize}${profilePath}`} alt=""/>
+            <p>{character}</p>
+            <p>{name}</p>
         </div>
     )
 }
