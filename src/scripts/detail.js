@@ -75,7 +75,7 @@ function Detail(){
                 </div>
                 <h2>감독</h2>
                 <div className={DetailStyles.cast_container}>
-                    <ShowActor profilePath={director.profile_path} character='Drector' name={director.name}/>
+                    <ShowActor profilePath={director.profile_path} character='Director' name={director.name}/>
                 </div>
                 <div className={DetailStyles.details_container}>
                     <p>{genres.map(genre=>(genre.name+' '))}</p>
