@@ -44,7 +44,7 @@ function Detail(){
         youtubeKey ? setVideoKey(videoJson.results[0].key) : setIsYouTube(false);
         poster_path ? setPosterPath(planeJson.poster_path) : setIsPosterPath(false);
         main_characters ? setMainCharacters(credditJson.cast.slice(0,3)) : setIsMainCharacters(false);
-        director ? setDirector(credditJson.crew.find((member)=>member.job === 'Director')) : setDirector(false);
+        director ? setDirector(credditJson.crew.find((member)=>member.job === 'Director')) : setIsDirector(false);
         
         setGenres(planeJson.genres)
         setTitle(planeJson.title)
