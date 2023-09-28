@@ -20,6 +20,9 @@ function Detail(){
     const [posterPath, setPosterPath] = useState('')
     const [videoKey, setVideoKey] = useState('')
     const [isYouTube, setIsYouTube] = useState(true)
+    const [isPosterPath, setIsPosterPath] = useState(true)
+    const [isMainCharacters, setIsMainCharacters] = useState(true)
+    const [isDirector, setIsDirector] = useState(true)
     const [mainCharacters, setMainCharacters] = useState([])
     const [director, setDirector] = useState('')
     
@@ -33,22 +36,22 @@ function Detail(){
         const credditRes = await fetch(credditUrl)
         const credditJson = await credditRes.json()
         
-        setMainCharacters(credditJson.cast.slice(0,3))
-        setDirector(credditJson.crew.find((member)=>member.job === 'Director'))
         const youtubeKey =  videoJson.results && videoJson.results[0] && videoJson.results[0].key;
+        const poster_path = planeJson.poster_path;
+        const main_characters = credditJson.cast && credditJson.cast.slice(0,3);
+        const director = credditJson.crew && credditJson.crew.find((member)=>member.job === 'Director')
         
-        if (youtubeKey){
-            setVideoKey(videoJson.results[0].key)
-        }else{
-            setIsYouTube(false)
-        }
+        youtubeKey ? setVideoKey(videoJson.results[0].key) : setIsYouTube(false);
+        poster_path ? setPosterPath(planeJson.poster_path) : setIsPosterPath(false);
+        main_characters ? setMainCharacters(credditJson.cast.slice(0,3)) : setIsMainCharacters(false);
+        director ? setDirector(credditJson.crew.find((member)=>member.job === 'Director')) : setDirector(false);
+        
         setGenres(planeJson.genres)
         setTitle(planeJson.title)
         setOverview(planeJson.overview)
         setReleaseDate(planeJson.release_date)
         setScore(planeJson.vote_average)
         setRuntime(planeJson.runtime)
-        setPosterPath(planeJson.poster_path)
     }, [videoUrl, planeUrl, credditUrl])
 
     useEffect(()=>{getDetailsOfMovie()}, [getDetailsOfMovie])
@@ -63,7 +66,7 @@ function Detail(){
                 <h1>{title}</h1>
             </div>
             <div className={DetailStyles.video_box}>
-                {isYouTube ? <ShowVideo videoKey={videoKey} /> : <AlteringVideo posterPath={posterPath}/>}            
+                {isYouTube ? <ShowVideo videoKey={videoKey} /> : <AlteringVideo posterPath={posterPath} isPosterPath={isPosterPath}/>}            
             </div>
             <div className={DetailStyles.overview_container}>
                 <p>{overview}</p>
@@ -71,11 +74,20 @@ function Detail(){
             <div className={DetailStyles.information_container}>
                 <h2>출연진</h2>
                 <div className={DetailStyles.cast_container}>
-                    {mainCharacters.map((mainCharacter)=>(<ShowActor profilePath={mainCharacter.profile_path} character={mainCharacter.character} name={mainCharacter.name}/>))}
+                    {mainCharacters.map((mainCharacter)=>(
+                    <ShowActor 
+                    profilePath={
+                        isMainCharacters ? mainCharacter.profile_path:<p>프로필 정보 없음</p>
+                    } 
+                    character={isMainCharacters ? mainCharacter.character : <p>배역 정보 없음</p>} 
+                    name={isMainCharacters ?  mainCharacter.name : <p>이름 정보 없음</p>}/>))}
                 </div>
                 <h2>감독</h2>
                 <div className={DetailStyles.cast_container}>
-                    <ShowActor profilePath={director.profile_path} character='Director' name={director.name}/>
+                    <ShowActor 
+                    profilePath={isDirector ? director.profile_path : <p>프로필 정보 없음</p>} 
+                    character='Director' 
+                    name={isDirector ? director.name : <p>이름 정보 없음</p>}/>
                 </div>
                 <div className={DetailStyles.details_container}>
                     <p>{genres.map(genre=>(genre.name+' '))}</p>
@@ -95,12 +107,12 @@ function ShowVideo({videoKey}){
 }
 
 
-function AlteringVideo({posterPath}){
+function AlteringVideo({posterPath, isPosterPath}){
     const posterBaseUrl = 'https://image.tmdb.org/t/p/'
     const posterSize = 'w154'
     return (
         <div className={DetailStyles.exception}>
-            <img alt="" src={`${posterBaseUrl}${posterSize}${posterPath}`}></img>
+            {isPosterPath ? <img alt="" src={`${posterBaseUrl}${posterSize}${posterPath}`}></img> : <p>영화 포스터가 없습니다.</p>}
             <p>예고편을 가져올 수 없습니다.</p>
         </div>
     )
