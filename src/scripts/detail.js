@@ -124,7 +124,7 @@ function ShowActor({profilePath, character,name}){
     return (
         <div className={DetailStyles.cast_box}>
             <img src={`${posterBaseUrl}${posterSize}${profilePath}`} alt=""/>
-            <p>{character}</p>
+            <p>{character} /</p>
             <p>{name}</p>
         </div>
     )
