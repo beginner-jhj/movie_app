@@ -1,7 +1,7 @@
 .search_result_home{
     display: grid;
     grid-template-columns: 1fr;
-    grid-template-rows: 40% 60%;
+    grid-template-rows: 20vh 80%;
     row-gap: 30px;
     align-items: center;
     justify-items: center;
@@ -18,7 +18,6 @@
     display: grid;
     grid-template-columns: 1fr;
     grid-template-rows: repeat(3,1fr);
-    row-gap: 7px;
     align-items: center;
     justify-items: center;
 }
