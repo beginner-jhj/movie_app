@@ -1,6 +1,7 @@
 @import 'reset.css';
 body{
     width: 100vw;
+    overflow-x: hidden;
     background-color:rgb(40, 39, 39);
 }
 
